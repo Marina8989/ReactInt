@@ -3,17 +3,22 @@ import './App.css';
 
 const App = () =>  {
   const [value, setValue] = useState('');
-  const [list, setList] = useState([])
+  const [list, setList] = useState()
   const listArr = ['Jono', 'Marina', 'Lashandra', 'Bob', 'Lucia', 'Sofia', 'Erik', 'Jerald', 'Mary', 'Brian', 'Bernard']
   const newArr = []
 
+  const setInputValue = (e, val) => {
+    setValue(val)
+  }
+
   const handleChange  = (e) => {
-     setValue(e.target.value)
-     const x = listArr.map(item => {
+     setValue(e.target.value) 
+     listArr.forEach(item => {
        if(item.substring(0, e.target.value.length).toUpperCase() === e.target.value.toUpperCase()) {
          newArr.push(item)
          console.log('newArr', newArr)
-         setList(newArr.map((item, index) => <li key={index}>{item}</li>))
+
+         setList(newArr.map((item, index) => <li key={index} onClick={(e) => setInputValue(e, item)}>{item}</li>))
        }
        if(e.target.value.length === 0) {
          setList([])

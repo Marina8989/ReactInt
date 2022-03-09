@@ -13,15 +13,21 @@ const App = () =>  {
        if(item.substring(0, e.target.value.length).toUpperCase() === e.target.value.toUpperCase()) {
          newArr.push(item)
          console.log('newArr', newArr)
+         setList(newArr.map((item, index) => <li key={index}>{item}</li>))
+       }
+       if(e.target.value.length === 0) {
+         setList([])
        }
      })
   }
- console.log(newArr)
+ console.log('list', list)
   return (
+    <>
     <div className="container">
-      <input value={value} onChange={(e) => handleChange(e)}/>
-      {newArr.map(el => <li key={el}>{el}</li>)}
+      <input value={value} onChange={(e) => handleChange(e)}/> <br/>
     </div>
+    {list}
+    </>
   );
 }
 

@@ -2,37 +2,53 @@ import React, {useState} from 'react';
 import './App.css';
 
 const App = () =>  {
-  const [value, setValue] = useState('')
-  const [success, setSuccess] = useState(false);
-  const [fail, setFail] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
 
-  const handleChange = (e) => {
-     setValue(e.target.value)
-  }
+  const handleSignUp = () => {
+   setIsSignUp(!isSignUp)
+ }
 
-  const checkForPalindrom = (val) => {
-    console.log(val)
-    if(value.split('').reverse().join('') === val){
-      console.log(true)
-      setFail(false)
-      setSuccess(true)
-      setValue('')
-    }else {
-      setFail(true)
-      setSuccess(false)
-      setValue('')
-    }
-    
-  }
+ const returnOption = () => {
+   if(isSignUp) {
+     return (
+       <>
+        <h3>SIGN UP</h3>
+        <form>
+         <input type="text" placeholder="First Name" /><br /><br />
+         <input type="text" placeholder="Second Name" /><br /><br />
+         <input type="email" placeholder="Email" />
+       </form>
+       <div>
+        <h3>Don't have an account?</h3>
+        <button onClick={handleSignUp}>sign up</button><br />
+       </div>
+       </>
+     )
+   }
+   if(!isSignUp){
+     return (
+       <>
+        <h3>SIGN IN</h3>
+        <form>
+         <input type="text" placeholder="Accoint ID" /><br /><br />
+         <input type="email" placeholder="Email" />
+       </form>
+       <div>
+        <h3>Already have an account?</h3>
+        <button onClick={handleSignUp}>sign In</button><br />
+       </div>
+       </>
+     )
+   }
+ }
+
+
   return (
     <>
-     <div>
-       <input type="text" value={value} onChange={handleChange}/>
-       <button onClick={(e) => checkForPalindrom(value)}>submit</button>
-     </div>
-     {value}
-      {success && <h3>Yes, it is palindrom</h3> }
-      {fail && <h3>No, it is not a palindrom</h3>}
+       {returnOption()}
+      <div>
+        <button onClick={handleSignUp}>start</button>
+      </div>
     </>
   );
 }

@@ -1,56 +1,22 @@
-import React, {useState} from 'react';
-import './App.css';
+import React from 'react';
 
-const App = () =>  {
-  const [isSignUp, setIsSignUp] = useState(false);
-
-  const handleSignUp = () => {
-   setIsSignUp(!isSignUp)
- }
-
- const returnOption = () => {
-   if(isSignUp) {
-     return (
+function Header(props) {
+    return (
        <>
-        <h3>SIGN UP</h3>
-        <form>
-         <input type="text" placeholder="First Name" /><br /><br />
-         <input type="text" placeholder="Second Name" /><br /><br />
-         <input type="email" placeholder="Email" />
-       </form>
-       <div>
-        <h3>Don't have an account?</h3>
-        <button onClick={handleSignUp}>sign up</button><br />
-       </div>
+         <h3>Hello, {props.name}! How are you?</h3>
+         <h4>Did you know that your mama loves you a lotttt?</h4>
+         <h5>{props.number}</h5>
        </>
-     )
-   }
-   if(!isSignUp){
-     return (
-       <>
-        <h3>SIGN IN</h3>
-        <form>
-         <input type="text" placeholder="Accoint ID" /><br /><br />
-         <input type="email" placeholder="Email" />
-       </form>
-       <div>
-        <h3>Already have an account?</h3>
-        <button onClick={handleSignUp}>sign In</button><br />
-       </div>
-       </>
-     )
-   }
- }
+    )
+}
 
+const App = () => {
+    return(
+        <>
+          <Header name='Jono' number='5'/>
 
-  return (
-    <>
-       {returnOption()}
-      <div>
-        <button onClick={handleSignUp}>start</button>
-      </div>
-    </>
-  );
+        </>
+    )
 }
 
 export default App;

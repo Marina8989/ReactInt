@@ -1,38 +1,30 @@
 import React, { useState } from "react";
 import "./index.css";
 
-const App = () => {
-  const [value, setValue] = useState("");
-  const [list, setList] = useState([]);
+const Content = () => {
+  const [isActive, setIsActive] = useState(false);
+  const handleClick = () => {
+    setIsActive(!isActive);
+  }
+  console.log(isActive);
+  return (
+    <div className="container">
+      <h3>Choose One <span className="icon" onClick={handleClick}>▾</span></h3>
+      {isActive && (
+        <div className="container-option">
+        <h5>React</h5>
+        <h5>Vue</h5>
+        <h5>Angular</h5>
+        </div>
+      )}
+    </div>  
+  )
+}
 
-  const handleChange = (e) => {
-     setValue(e.target.value);
-  }
-  const handleSubmit = (e) => {
-     e.preventDefault();
-     const newItem = {
-        id: `${Math.random() - Math.random()}`,
-        value
-     }
-     const newList = [...list, newItem]
-     setList(newList)
-     setValue("");
-  }
-  const handleRemove = (el) => {
-    const newItem = list.filter(item => item.id !== el.id);
-    setList(newItem);
-  }
+const App = () => {
   return (
   <div>
-    <form onSubmit={handleSubmit}>
-      <input value={value} onChange={handleChange}/>
-    </form>
-    <ul>
-     {list.map(item => <li key={item.id}>
-       {item.value}
-       <button onClick={() => handleRemove(item)}>X</button>
-       </li>)}
-    </ul>
+    <Content />
   </div>
   )
 };

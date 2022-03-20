@@ -14,7 +14,8 @@ const App = () => {
      const item = {
        id: `${Math.random() - Math.random()}`,
        value,
-       complete: false
+       complete: false,
+       priority: 0
      }
      const newList = [...list, item];
      setList(newList);
@@ -38,6 +39,30 @@ const App = () => {
     const newItem = list.filter(item => item.value.includes(searchValue));
     setList(newItem)
   }
+  const handlePriority = (el) => {
+     console.log(el.priority)
+     console.log(el)
+     const newItem = list.map(item => {
+       if(item.id === el.id) {
+           item.priority += 1
+       }
+       return item;
+     })
+     setList(newItem)
+     console.log(el.priority)
+     console.log(el)
+  }
+  const handleSort = () => {
+    const newItem = list.sort((a, b) => {
+      if(a.priority < b.priority) {
+         console.log('a', a.priority)
+      }
+      if(a.priority > b.priority) {
+        console.log('b', b.priority)
+     }
+    })
+    setList(newItem);
+  }
   return (
   <div>
     <form onSubmit={handleSubmit}>
@@ -46,11 +71,12 @@ const App = () => {
       <input value={searchValue} onChange={handleSearch}/>
     <ul>
       {list.map(item => <li key={item.id} className={`${item.complete ? 'cyan' : ''}`}>
-        {item.value}
+        <h5>{item.value} / <span onClick={() => handlePriority(item)}>priority: {item.priority}/</span></h5>
         <button onClick={() => handleToggle(item)}>toggle</button>
         <button onClick={() => handleRemove(item)}>remove</button>
         </li>)}
     </ul>
+    <button onClick={handleSort}>sort</button>
   </div>
   )
 };

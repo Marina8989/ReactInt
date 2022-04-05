@@ -1,19 +1,30 @@
-import React, { useState } from "react";
-import Multiselect from "multiselect-react-dropdown";
+import React from "react";
 import "./index.css";
 
-const data = [
-  {id: 1, country: "Italy"},
-  {id: 2, country: "Hungary"},
-  {id: 3, country: "Spain"},
-  {id: 4, country: "Ireland"}
-]
-
 const App = () => {
-  const [options, setOptions] = useState(data)
   return (
-  <div>
-   <Multiselect options={options} displayValue="country"/>
+  <div className="main">
+    <h3>Create Account</h3>
+    <div className="icons">
+      <div className="icon"></div>
+      <div className="icon"></div>
+      <div className="icon"></div>
+      <div className="icon"></div>
+    </div>
+    <h6>or use your email for registration</h6>
+    <div className="inputs">
+      <input type="text" placeholder="Name" /><br/>
+      <input type="email" placeholder="Email" /><br/>
+      <input type="number" placeholder="Password" /><br/>
+    </div>
+    <div className="ckeck-input">
+      <input type="checkbox" />
+      <h6> I agree to the Terms and Privacy Policy</h6>
+    </div>
+    <div className="buttons">
+      <button>Sign Up</button>
+      <button>Sign In</button>
+    </div>
   </div>
   )
 };

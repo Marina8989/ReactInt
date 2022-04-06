@@ -24,6 +24,7 @@ const nums = [
 
 const CounterNumber = () => {
     const [counter, setCounter] = useState(nums);
+    const [sorted, setSorted] = useState(null);
     
     const handleIncrement = (item) => {
      const newItem = counter.map(el => {
@@ -34,12 +35,34 @@ const CounterNumber = () => {
      })
      setCounter(newItem)
     }
+    const handleSort = () => {
+        if(sorted === null) {
+          setSorted(true)
+        }
+        if(sorted === true) {
+          setSorted(false)
+        }
+        if(sorted === false) {
+          setSorted(null)
+        }
+        console.log(sorted)
+
+        const newItem = counter.sort((a, b) => {
+            if(sorted) {
+               return a.counter - b.counter;
+            }else if(sorted === false) {
+               return b.counter - a.counter;
+            }
+        });
+        setCounter(newItem)
+    }
     return (
       <>
        {counter.map(item => <div key={item.id}>
          <h5>{item.counter}</h5>
          <button onClick={() => handleIncrement(item)}>increment</button>
         </div>)}
+        <button onClick={handleSort}>sort</button>
       </>
     )
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Counter from './components/Counter';
 import "./index.css";
 
 function App () {
@@ -9,7 +10,6 @@ function App () {
   const handleChange = (e) => {
     setValue(e.target.value);
   }
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const item = {
@@ -21,7 +21,6 @@ function App () {
     setList(newItem);
     setValue("");
   }
-
   const handleToggle = (el) => {
     console.log('hellooo')
    const newItem = list.map(item => {
@@ -55,6 +54,7 @@ function App () {
            <button onClick={() => handleRemove(item)}>remove</button>
         </li>)}
       </ul>
+      <Counter />
     </div>
   )
 }

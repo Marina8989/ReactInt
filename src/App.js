@@ -7,16 +7,27 @@ class Item extends React.Component{
     visible: false
   }
   handleUpdate = () => {
-    this.setState({visible: true})
+    this.setState({visible: true});
+  }
+  handleChange = (e) => {
+    this.setState({updatedValue: e.target.value });
+  }
+  handleResubmit = (e) => {
+    e.preventDefault();
+    this.props.handleResubmit(this.props.item, this.state.updatedValue);
+    this.setState({updatedValue: this.state.updatedValue, visible: false});
   }
   render(){
+    
     return (
       <li className={this.props.item.completed ? 'cyan' : ''}>
-        {this.state.visible ? <input value={this.state.updatedValue}/> : (
-          <h6 onClick={() => this.handleUpdate()}>{this.props.item.value}</h6>
+        {this.state.visible ? (<form onSubmit={this.handleResubmit}>
+          <input value={this.state.updatedValue} onChange={this.handleChange}/>
+          </form>) : (
+          <h6 onClick={this.handleUpdate}>{this.props.item.value}</h6>
         )}
         <button onClick={(e) => this.props.handleToggle(this.props.item)}>toggle</button>
-           <button onClick={(e) =>this.props.handleRemove(this.props.item)}>remove</button>
+        <button onClick={(e) =>this.props.handleRemove(this.props.item)}>remove</button>
       </li>
     )
   }
@@ -27,6 +38,7 @@ const List = (props) => {
      {props.list.map(item => <Item key={item.id} item={item} 
              handleToggle={props.handleToggle}
              handleRemove={props.handleRemove}
+             handleResubmit={props.handleResubmit}
              />)}
     </ul>
   )
@@ -82,6 +94,15 @@ class App extends React.Component{
      this.setState({list: newItem})
   }
 
+  handleResubmit = (el, val) => {
+    const newItem = this.state.list.map(item => {
+      if(item.id === el.id){
+         el.val = val
+      }
+      return item;
+    })
+    this.setState({list: newItem})
+  }
     render() {
       return (
         <>
@@ -89,6 +110,7 @@ class App extends React.Component{
           <List list={this.state.list} 
             handleToggle={this.handleToggle} 
             handleRemove={this.handleRemove}
+            handleResubmit={this.handleResubmit}
             />
         </>
       )

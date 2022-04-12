@@ -1,62 +1,85 @@
-import React, { useState } from "react";
-import Counter from './components/Counter';
+import React from "react";
 import "./index.css";
 
-function App () {
-  const [value, setValue] = useState("");
-  const [list, setList] = useState([]);
-  const [searchValue, setSearchValue] = useState("")
-
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  }
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const item = {
-      id: `${Math.random() - Math.random()}`,
-      value,
-      complete: false
-    }
-    const newItem = [...list, item];
-    setList(newItem);
-    setValue("");
-  }
-  const handleToggle = (el) => {
-    console.log('hellooo')
-   const newItem = list.map(item => {
-     if(item.id === el.id) {
-       item.complete = !item.complete;
-       console.log(item.complete, item.id)
-     }
-     return item;
-   })
-   setList(newItem)
-  }
-  const handleRemove = (el) => {
-     const newItem = list.filter(item => item.id !== el.id)
-     setList(newItem)
-  }
-  const handleSearchValue = (e) => {
-    setSearchValue(e.target.value)
-    const newItem = list.filter(item => item.value.includes(searchValue)) 
-    setList(newItem)
-  }
+const Item = (props) => {
   return (
-    <div>
-      <h2>react app</h2>
-      <form onSubmit={handleSubmit}>
-        <input value={value} onChange={handleChange} />
-      </form>
-      <input value={searchValue} onChange={handleSearchValue} />
-      <ul>
-        {list.map(item => <li key={item.id}>
-           <span>{item.value}</span>
-           <button onClick={() => handleRemove(item)}>remove</button>
-        </li>)}
-      </ul>
-      <Counter />
-    </div>
+    <li className={props.item.completed ? 'cyan' : ''}>
+      {props.item.value}
+      <button onClick={(e) => props.handleToggle(props.item)}>toggle</button>
+      <button onClick={(e) => props.handleRemove(props.item)}>remove</button>
+    </li>
+  )
+}
+const List = (props) => {
+  return (
+    <ul>
+     {props.list.map(item => <Item key={item.id} item={item} 
+             handleToggle={props.handleToggle}
+             handleRemove={props.handleRemove}
+             />)}
+    </ul>
   )
 }
 
-export default App;
+class Form extends React.Component {
+  state = {
+     value: ''
+  }
+  handleChange = (e) => {
+    this.setState({value: e.target.value});
+ }
+
+ handleSubmit = (e) => {
+   e.preventDefault();
+   const value = this.state.value;
+   this.props.handleSubmit(value);
+   this.setState({value: ''})
+ }
+ 
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input value={this.state.value} onChange={this.handleChange} />
+      </form>
+    )
+  }
+}
+
+class App extends React.Component{
+  state = {
+    list: []
+  };
+  handleSubmit = (value) => {
+     const item = {
+       id: `${Math.random() - Math.random()}`,
+       value,
+       completed: false
+     }
+    const newItem = [...this.state.list, item];
+    this.setState({list: newItem}) 
+  }
+  handleToggle = (el) => {
+    const newItem = this.state.list.map(item => {
+      if(item.id === el.id) {
+        item.completed = !item.completed;
+      }
+      return item;
+    })
+    this.setState({list: newItem});
+  }
+  handleRemove = (el) => {
+     const newItem = this.state.list.filter(item => item.id !== el.id);
+     this.setState({list: newItem});
+  }
+    render() {
+      return (
+        <>
+          <Form handleSubmit={this.handleSubmit}/>
+          <List list={this.state.list} 
+            handleToggle={this.handleToggle} 
+            handleRemove={this.handleRemove}/>
+        </>
+      )
+    }
+}
+export default App

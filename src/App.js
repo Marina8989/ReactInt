@@ -1,14 +1,25 @@
 import React from "react";
 import "./index.css";
 
-const Item = (props) => {
-  return (
-    <li className={props.item.completed ? 'cyan' : ''}>
-      {props.item.value}
-      <button onClick={(e) => props.handleToggle(props.item)}>toggle</button>
-      <button onClick={(e) => props.handleRemove(props.item)}>remove</button>
-    </li>
-  )
+class Item extends React.Component{
+  state = {
+    updatedValue: this.props.item.value,
+    visible: false
+  }
+  handleUpdate = () => {
+    this.setState({visible: true})
+  }
+  render(){
+    return (
+      <li className={this.props.item.completed ? 'cyan' : ''}>
+        {this.state.visible ? <input value={this.state.updatedValue}/> : (
+          <h6 onClick={() => this.handleUpdate()}>{this.props.item.value}</h6>
+        )}
+        <button onClick={(e) => this.props.handleToggle(this.props.item)}>toggle</button>
+           <button onClick={(e) =>this.props.handleRemove(this.props.item)}>remove</button>
+      </li>
+    )
+  }
 }
 const List = (props) => {
   return (
@@ -44,7 +55,6 @@ class Form extends React.Component {
     )
   }
 }
-
 class App extends React.Component{
   state = {
     list: []
@@ -71,13 +81,15 @@ class App extends React.Component{
      const newItem = this.state.list.filter(item => item.id !== el.id);
      this.setState({list: newItem})
   }
+
     render() {
       return (
         <>
           <Form handleSubmit={this.handleSubmit}/>
           <List list={this.state.list} 
             handleToggle={this.handleToggle} 
-            handleRemove={this.handleRemove}/>
+            handleRemove={this.handleRemove}
+            />
         </>
       )
     }

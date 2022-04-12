@@ -69,7 +69,7 @@ class App extends React.Component{
   }
   handleRemove = (el) => {
      const newItem = this.state.list.filter(item => item.id !== el.id);
-     this.setState({list: newItem});
+     this.setState({list: newItem})
   }
     render() {
       return (

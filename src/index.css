@@ -2,8 +2,16 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background: #f2f2f2;
 }
-.cyan {
-  background: cyan;
+body{
+    background: rgb(241, 232, 241);;
+}
+.main{
+    width: 400px;
+    margin: 2rem auto;
+    text-align: center;
+    border-radius: 5px;
+    padding: 1.7rem .5rem;
+    background: rgb(249, 248, 249);
+    box-shadow: 1px 1px 3px 3px rgb(202, 202, 202), 5px 5px 2px 2px rgb(218, 216, 216);
 }

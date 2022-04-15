@@ -1,23 +1,27 @@
 import React, {useState} from 'react';
-import Form from '././components/Form';
+import {ThemeProvider} from 'styled-components';
 import './index.css';
 
 function App() {
-  const [theme, setTheme] = useState('light');
-  const [buttonOption, setButtonOption] = useState(false);
+    const [buttonSwitch, setButtonSwitch] = useState(false);
+    const [theme, setTheme] = useState('light')
 
-  const handleSwitch = () => {
-    setButtonOption(!buttonOption)
-  }
+    const handleSwitch = () => {
+      if(buttonSwitch === false) {
+         setButtonSwitch(true);
+         setTheme('light')
+      }
+      if(buttonSwitch === true) {
+         setButtonSwitch(false);
+         setTheme('dark')
+      }
+    }
     return(
-        <div className='main'>
-          <h3>Sign In</h3>
-          <Form />
-          <div>
-            <button onClick={handleSwitch}>{buttonOption ? 'ON' : 'OFF'}</button>
-          </div>
-        </div>
+        <ThemeProvider theme={{theme}}>
+            <div className={buttonSwitch ? 'light' : 'dark'}>
+            <button onClick={handleSwitch}>{buttonSwitch ? 'ON' : 'OFF'}</button>
+            </div>
+        </ThemeProvider>
     )
 }
-
 export default App

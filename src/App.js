@@ -1,27 +1,30 @@
 import React, {useState} from 'react';
-import {ThemeProvider} from 'styled-components';
-import './index.css';
 
 function App() {
-    const [buttonSwitch, setButtonSwitch] = useState(false);
-    const [theme, setTheme] = useState('light')
-
-    const handleSwitch = () => {
-      if(buttonSwitch === false) {
-         setButtonSwitch(true);
-         setTheme('light')
-      }
-      if(buttonSwitch === true) {
-         setButtonSwitch(false);
-         setTheme('dark')
-      }
+    const [value, setValue] = useState('');
+    const [isPalindrome, setIsPalindrome] = useState(false);
+  
+    const handleChange = (e) => {
+       setValue(e.target.value);
+    }
+    const handlePalindrome = () =>{
+       const x = value.split('').reverse().join('');
+       console.log(x)
+       if(value === x) {
+          setIsPalindrome(true);
+       }else if(value !== x){
+         setIsPalindrome(false);
+       }
+       setValue('')
     }
     return(
-        <ThemeProvider theme={{theme}}>
-            <div className={buttonSwitch ? 'light' : 'dark'}>
-            <button onClick={handleSwitch}>{buttonSwitch ? 'ON' : 'OFF'}</button>
-            </div>
-        </ThemeProvider>
+        <>
+          <input value={value} onChange={handleChange} type="text" />
+         <button onClick={handlePalindrome}>check palindrome</button>
+         <div>
+          {isPalindrome ? `${value} is palindrome` : `${value} is not palindrome`}
+         </div>
+        </>
     )
 }
 export default App

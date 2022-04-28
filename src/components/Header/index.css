@@ -1,0 +1,9 @@
+.main-header{
+    text-align: center;
+}
+.divs{
+    display: flex;
+    justify-content: space-around;
+    width: 400px;
+    margin: 0 auto;
+}

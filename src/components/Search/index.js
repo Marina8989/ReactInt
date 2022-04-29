@@ -62,7 +62,9 @@ class Search extends React.Component{
         completed: false
        }
        const newItem = [...this.state.list, item];
-       this.setState({list: newItem})
+       localStorage.setItem('list', JSON.stringify(newItem));
+       this.setState({list: newItem});
+       
     }
     handleToggle = (el) => {
       const newList = this.state.list.map(item => {
@@ -79,6 +81,10 @@ class Search extends React.Component{
     }
     handleSearchValue = (e) => {
        this.setState({searchValue: e.target.value});
+    }
+    componentDidMount() {
+      const list = JSON.parse(localStorage.getItem('list')) || [];
+      this.setState({list: list})
     }
     render(){
         const newList = this.state.list.filter(item => item.value.includes(this.state.searchValue))

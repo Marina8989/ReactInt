@@ -4,13 +4,14 @@ import './index.css';
 // import Inputs from './components/Inputs';
 // import Buttons from './components/Buttons';
 //import Search from './components/Search';
-import Project from './components/Project';
+//import Project from './components/Project';
+import ProjectSort from './components/ProjectSort';
 
 class App extends React.Component{
   render() {
     return(
       <>
-        <Project />
+        <ProjectSort />
       </>
     )
   }

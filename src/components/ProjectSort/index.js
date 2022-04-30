@@ -7,6 +7,7 @@ const Item = (props) => {
           {props.item.value}
           <button onClick={() => props.handleToggle(props.item)}> Toggle</button>
           <button onClick={() => props.handleRemove(props.item)}> Remove</button>
+          <button onClick={() => props.handlePriority(props.item)}>{props.item.priority}</button>
       </li>
    )
 }
@@ -14,7 +15,12 @@ const Item = (props) => {
 const List = (props) => {
    return (
        <ul>
-           {props.list.map(item => <Item item={item} key={item.id} handleToggle={props.handleToggle} handleRemove={props.handleRemove}/>)}
+           {props.list.map(item => <Item item={item} 
+                                         key={item.id} 
+                                         handleToggle={props.handleToggle} 
+                                         handleRemove={props.handleRemove}
+                                         handlePriority={props.handlePriority}
+                                  />)}
        </ul>
    )
 }
@@ -42,14 +48,16 @@ class Form extends React.Component{
 }
 class ProjectSort extends React.Component{
     state = {
-        list: []
+        list: [],
+        sorted: null
     }
 
     handleSubmit = (value) => {
       const item = {
           id: `${Math.random() - Math.random()}`,
           value,
-          completed: false
+          completed: false,
+          priority: 0
       }
       const newList = [...this.state.list, item]
       this.setState({list: newList});
@@ -70,6 +78,34 @@ class ProjectSort extends React.Component{
        this.setState({list: newItem});
        localStorage.setItem('list', JSON.stringify(newItem))
     }
+    handlePriority = (el) => {
+       const newList = this.state.list.map(item => {
+           if(item.id === el.id) {
+             item.priority = item.priority + 1;
+           }
+           return item;
+       });
+       this.setState({list: newList})
+    }
+    handleSort = () => {
+      if(this.state.sorted === null) {
+          this.setState({sorted: true})
+      }
+      if(this.state.sorted === true) {
+         this.setState({sorted: false})
+      }
+      if(this.state.sorted === false) {
+          this.setState({sorted: null})
+      }
+      const newList = this.state.list.sort((a, b) => {
+        if(this.state.sorted === true) {
+            return a.priority - b.priority;
+        }else if(this.state.sorted === false) {
+            return b.priority - a.priority;
+        }
+    })
+     this.setState({list: newList})
+    }
     componentDidMount() {
         const newList = JSON.parse(localStorage.getItem('list')) || [];
         this.setState({list: newList})
@@ -78,7 +114,12 @@ class ProjectSort extends React.Component{
         return(
             <>
               <Form handleSubmit={this.handleSubmit} />
-              <List list={this.state.list} handleToggle={this.handleToggle} handleRemove={this.handleRemove}/>
+              <List list={this.state.list} 
+                    handlePriority={this.handlePriority}
+                    handleToggle={this.handleToggle} 
+                    handleRemove={this.handleRemove}
+              />
+              <button onClick={this.handleSort}>sort</button>
             </>
         )
     }

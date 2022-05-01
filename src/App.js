@@ -5,13 +5,15 @@ import './index.css';
 // import Buttons from './components/Buttons';
 //import Search from './components/Search';
 //import Project from './components/Project';
-import ProjectSort from './components/ProjectSort';
+//import ProjectSort from './components/ProjectSort';
+//import Layers from './components/Layers';
+import DataOne from './components/DataOne';
 
 class App extends React.Component{
   render() {
     return(
       <>
-        <ProjectSort />
+        <DataOne />
       </>
     )
   }

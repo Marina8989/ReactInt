@@ -35,10 +35,11 @@ class DataOne extends React.Component{
               </form>
               {this.state.hasError && <h3>There was an error...</h3>}
               {this.state.isLoading ? <h4>Loading...</h4> : (this.state.users.map(user => {
+                  const {id, name, avatar_url} = user;
                   return (
-                    <div key={user.id}>
-                        <h4>{user.login}</h4>
-                        <h4>Name: {user.name}</h4>
+                    <div key={id}>
+                        <h4>{name}</h4>
+                        <img src={avatar_url} />
                     </div>
                   )
               }))

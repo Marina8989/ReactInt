@@ -8,17 +8,26 @@ const UserHook = () => {
   const handleChange = (e) => {
      setValue(e.target.value);
   }
+  const getUser = async(user) => {
+      const {data} = await axios(`https://api.github.com/users/${user}`);
+      console.log(data)
+      setTodos([...todos, data]);
+  }
   const handleSubmit = (e) => {
      e.preventDefault();
-     setTodos([...todos, value]);
+     getUser(value);
      setValue('');
   }
+  useEffect(() => {
+    
+  }, [])
+  console.log(todos)
     return(
         <>
           <form onSubmit={handleSubmit}>
               <input value={value} onChange={handleChange}  />
           </form>
-          {todos.map(item => <li key={item}>{item}</li>)}
+          {todos.map(item => <li key={item.id}>{item.name}</li>)}
         </>
     )
 }

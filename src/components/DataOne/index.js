@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import './index.css';
 
 class DataOne extends React.Component{
     state = {
@@ -9,13 +10,17 @@ class DataOne extends React.Component{
         hasError: false
     }
     getUser = async (user) => {
-        this.setState({isLoading: true});
-        try{
-            const {data} = await axios(`https://api.github.com/users/${user}`);
-            const newUser = [...this.state.users, data];
-            this.setState({users: newUser, isLoading: false, hasError: false});
-        }catch(err){
-           this.setState({hasError: true, isLoading: false});
+        if(this.state.users.find(item => item.name.toLowerCase() === user.toLowerCase())) {
+           return;
+        }else {
+            this.setState({isLoading: true});
+            try{
+                const {data} = await axios(`https://api.github.com/users/${user}`);
+                const newUser = [...this.state.users, data];
+                this.setState({users: newUser, isLoading: false, hasError: false});
+            }catch(err){
+               this.setState({hasError: true, isLoading: false});
+            }
         }
     }
     handleChange = (e) => {
@@ -37,10 +42,13 @@ class DataOne extends React.Component{
               {this.state.isLoading ? <h4>Loading...</h4> : (this.state.users.map(user => {
                   const {id, name, avatar_url} = user;
                   return (
-                    <div key={id}>
-                        <h4>{name}</h4>
-                        <img src={avatar_url} />
-                    </div>
+                       <div className='container' key={id}>
+                           <>
+                             <h4>{name}</h4>
+                             <img src={avatar_url} />
+                           </>
+                       </div>
+                    
                   )
               }))
              }

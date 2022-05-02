@@ -18,6 +18,10 @@ const UserHook = () => {
      getUser(value);
      setValue('');
   }
+  const handleRemove = (el) => {
+     const newList = todos.filter(item => item.id !== el.id);
+     setTodos(newList)
+  }
   useEffect(() => {
     
   }, [])
@@ -27,7 +31,13 @@ const UserHook = () => {
           <form onSubmit={handleSubmit}>
               <input value={value} onChange={handleChange}  />
           </form>
-          {todos.map(item => <li key={item.id}>{item.name}</li>)}
+          {todos.map(item => <div key={item.id}>
+              <h3>Name: {item.name}</h3>
+              <p>Bio: {item.bio}</p>
+              <h6>Location: {item.location}</h6>
+              <p>-------  --------</p>
+              <button onClick={() => handleRemove(item)}>remove</button>
+            </div>)}
         </>
     )
 }

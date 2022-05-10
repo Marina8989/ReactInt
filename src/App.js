@@ -9,13 +9,13 @@ import './index.css';
 //import Layers from './components/Layers';
 //import DataOne from './components/DataOne';
 //import UserHook from './components/UserHook';
-import ProjectThree from './components/ProjectThree';
+import ProjectTwo from './components/ProjectTwo';
 
 class App extends React.Component{
   render() {
     return(
       <>
-        <ProjectThree />
+        <ProjectTwo />
       </>
     )
   }

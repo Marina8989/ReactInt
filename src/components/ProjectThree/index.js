@@ -22,7 +22,8 @@ class Counter extends React.Component{
                 id: 4,
                 counter: 7
             }
-        ]
+        ],
+        sorted: null
     }
 
     handleClick = (el) => {
@@ -34,10 +35,32 @@ class Counter extends React.Component{
       })
       this.setState({list: newItem})
     }
+    handleSort = () => {
+        if(this.state.sorted === null) {
+          this.setState({sorted: true})
+        }
+        if(this.state.sorted === true){
+          this.setState({sorted: false})
+        }
+        if(this.state.sorted === false) {
+            this.setState({sorted: null})
+        }
+
+        const newItem = this.state.list.sort((a, b) => {
+            if(this.state.sorted === true) {
+              return a.counter - b.counter;
+            }else if(this.state.sorted === false) {
+              return b.counter - a.counter;
+            } 
+        })
+
+        this.setState({list: newItem})
+    }
     render(){
         return (
             <>
              {this.state.list.map(item => <div key={item.id}>{item.counter} <button onClick={() => this.handleClick(item)}>increament</button></div>)}
+             <button onClick={this.handleSort}>sort</button>
             </>
         )
     }

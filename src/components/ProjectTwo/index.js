@@ -1,7 +1,6 @@
 import React from 'react';
 import './index.css';
 
-
 class Form extends React.Component{
     state = {
         inputValue: ''
@@ -46,7 +45,8 @@ const List = (props) => {
 
 class ProjectTwo extends React.Component{
     state = {
-        list: []
+        list: [],
+        searchValue: ''
     }
     handleSubmit = (value) => {
        const item = {
@@ -70,12 +70,20 @@ class ProjectTwo extends React.Component{
       const newItem = this.state.list.filter(item => item.id !== el.id);
       this.setState({list: newItem})
     }
+
+    handleSearch = (e) => {
+       this.setState({searchValue: e.target.value})
+    }
     render(){
         console.log(this.state.list)
+        console.log(this.state.searchValue);
+
+        const filteresList = this.state.list.filter(item => item.value.includes(this.state.searchValue))
         return(
             <>
               <Form handleSubmit={this.handleSubmit} />
-              <List list={this.state.list} handleToggle={this.handleToggle} handleRemove={this.handleRemove}/>
+              <input value={this.state.searchValue} onChange={this.handleSearch}/>
+              <List list={filteresList} handleToggle={this.handleToggle} handleRemove={this.handleRemove}/>
             </>
         )
     }
